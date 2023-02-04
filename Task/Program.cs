@@ -1,30 +1,60 @@
-﻿//Заданный массив
-string[] inPutArray = new string[4] {"hello", "234", "world", "cat"};
-// Метод создания массива из 3-х символьных строк
-string[] CreateArr(string[] array, int size)
+﻿int ReadData(string line) // получаем данные 
 {
-    int j = 0; 
-   string[] outArr = new string[array.Length];
-    for (int i = 0; i < array.Length; i++)
-   
-        if (array[i].Length < size+1)
-        {
-            outArr[j] = array[i];
-            j++;
-       }
-      
-
-    return outArr;
+    // выводим сообщение
+    Console.WriteLine(line);
+    // переводим строку в вещественное число
+       int number = int.Parse(Console.ReadLine() ?? "0");
+    // возвращаем значение
+    return number;
 }
-// Метод вывода массива
-void PrintArray(string[] array)
-{
-   for (int i = 0; i < array.Length; i++)
-   {
-   Console.Write($"{array[i]} ");
+// генерируем массив
+string[] GenArray(int arrayLength)
+{   Console.WriteLine("Введите элементы массива через enter ");  
+    string[] array = new string[arrayLength];               
+    for (int i = 0; i < array.Length; i++)
+    {           
+        array[i] =  Console.ReadLine() ?? "0";             
     }
+return array;
+}
+// формируем массив с элементами меньше либо равно 3
+string[] ResultArray(string[] array)
+{   
+    string resString = "";
+      for (int i = 0; i < array.Length; i++)
+      {
+        if (array[i].Length <= 3)
+        {
+            resString = resString + array[i] + ",";            
+        }            
+      }
+       resString = resString.TrimEnd(',');     
+       array = resString.Split(',').ToArray();
+return array;    
+}
+
+//печатаем новый массив
+void PrintArray( string[] array)
+{
+    Console.Write("[" + array[0] + ",");
+    for (int i = 1; i < array.Length-1; i++)
+    {
+        Console.Write($"{array[i]},");
+    }
+    Console.Write(array[array.Length-1] + "]");
     Console.WriteLine();
 }
 
-string[] outPutArray = CreateArr(inPutArray,3);
-PrintArray(outPutArray);
+
+int arrayLength  = ReadData ("Ввeдите количество массивов ");
+string[] arr = GenArray(arrayLength);
+
+if (ResultArray(arr).Length <= 3) 
+{
+    Console.WriteLine("Массив с элементами, количество символов в которых <= 3");
+    PrintArray(ResultArray(arr)); 
+}
+else
+{
+    Console.WriteLine("Такого  массива нет ");
+}
